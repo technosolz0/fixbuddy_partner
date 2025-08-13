@@ -1,172 +1,261 @@
+// --- Corrected HomeView code ---
+import 'package:fixbuddy_partner/app/constants/app_color.dart';
+import 'package:fixbuddy_partner/app/modules/home/controllers/home_controller.dart';
+import 'package:fixbuddy_partner/app/modules/home/views/widgets/bottom_nav_widget.dart';
+import 'package:fixbuddy_partner/app/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:fixbuddy_partner/app/modules/home/views/widgets/category_grid_widget.dart';
-import 'package:fixbuddy_partner/app/constants/app_color.dart';
-import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-  const HomeView({super.key});
+  HomeView({super.key});
+
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
     return Scaffold(
-      backgroundColor: AppColors.grayColor,
-      body: Stack(
-        children: [
-          Container(
-            height: size.height * 0.34,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  AppColors.primaryColor,
-                  AppColors.secondaryColor,
-                  AppColors.tritoryColor,
-                  AppColors.whiteColor,
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              ),
+      backgroundColor: Colors.grey[100],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            _buildHeader(context, controller),
+            const SizedBox(height: 20),
+            _buildVendorCards(context, controller),
+            const SizedBox(height: 20),
+            _buildBookingSummary(context),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHeader(BuildContext context, HomeController controller) {
+    final size = MediaQuery.of(context).size;
+    return Stack(
+      children: [
+        Container(
+          height: size.height * 0.25,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [AppColors.primaryColor, AppColors.secondaryColor],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(30),
+              bottomRight: Radius.circular(30),
             ),
           ),
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 24, 16, 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Obx(
-                        () => Text(
-                          'Hello ${controller.username.value}',
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          IconButton(
-                            icon: const Icon(
-                              Icons.notifications_none,
-                              size: 28,
-                            ),
-                            onPressed: () {
-                              // Navigate to notifications page
-                              Get.toNamed('/notification');
-                            },
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.settings, size: 28),
-                            onPressed: () {
-                              // Navigate to notifications page
-                              Get.toNamed('/setting');
-                            },
-                          ),
-                        ],
-                      ),
-                    ],
+        ),
+        SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildHeaderRow(controller),
+                const SizedBox(height: 8),
+                Obx(
+                  () => Text(
+                    controller.location.value,
+                    style: const TextStyle(color: Colors.white70, fontSize: 14),
                   ),
-                  const SizedBox(height: 4),
-                  Obx(
-                    () => Text(
-                      controller.location.value,
-                      style: const TextStyle(color: Colors.black54),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  _buildSearchBar(),
-                  const SizedBox(height: 16),
-                  _buildOfferBanner(size),
-                  const SizedBox(height: 24),
-                  const Text(
-                    "Category",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Expanded(
-                    child: CategoryGridWidget(
-                      onCategoryTap: controller.openSubCategories,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildHeaderRow(HomeController controller) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Obx(
+          () => Text(
+            'Hello ${controller.username.value.split(' ').first}!',
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Row(
+          children: [
+            IconButton(
+              icon: const Icon(
+                Icons.notifications_none,
+                size: 28,
+                color: Colors.white,
+              ),
+              onPressed: () => Get.toNamed(Routes.notification),
+            ),
+            IconButton(
+              icon: const Icon(Icons.settings, size: 28, color: Colors.white),
+              onPressed: () => Get.toNamed(Routes.setting),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildVendorCards(BuildContext context, HomeController controller) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildWorkStatusCard(controller),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Expanded(
+                child: _buildInfoCard(
+                  icon: Icons.paid_outlined,
+                  title: "Total Earnings",
+                  value: "\$1,250",
+                  color: AppColors.tritoryColor,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: _buildInfoCard(
+                  icon: Icons.calendar_today_outlined,
+                  title: "Today's Bookings",
+                  value: "12",
+                  color: AppColors.secondaryColor,
+                ),
+              ),
+            ],
           ),
         ],
       ),
     );
   }
 
-  Widget _buildSearchBar() {
-    return TextField(
-      decoration: InputDecoration(
-        hintText: 'Search',
-        prefixIcon: const Icon(Icons.search),
-        filled: true,
-        fillColor: Colors.white,
-        contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide.none,
+  Widget _buildWorkStatusCard(HomeController controller) {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Icon(
+              Icons.business_center_outlined,
+              color: AppColors.primaryColor,
+              size: 30,
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Work Status",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  Obx(() {
+                    bool isOnline = controller.workStatus.value == 'work_on';
+                    return Text(
+                      isOnline ? "You are Online" : "You are Offline",
+                      style: TextStyle(
+                        color: isOnline ? Colors.green : Colors.red,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    );
+                  }),
+                ],
+              ),
+            ),
+            Obx(
+              () => Switch(
+                value: controller.workStatus.value == 'work_on',
+                onChanged: (bool value) {
+                  controller.updateWorkStatus(value ? 'work_on' : 'work_off');
+                },
+                activeColor: AppColors.primaryColor,
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildOfferBanner(Size size) {
-    return Container(
-      width: size.width,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+  Widget _buildInfoCard({
+    required IconData icon,
+    required String title,
+    required String value,
+    required Color color,
+  }) {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(icon, color: color, size: 30),
+            const SizedBox(height: 12),
+            Text(
+              title,
+              style: const TextStyle(fontSize: 14, color: Colors.black54),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              value,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+          ],
+        ),
       ),
-      padding: const EdgeInsets.all(16),
-      child: Row(
+    );
+  }
+
+  Widget _buildBookingSummary(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "Up to 50% Offer",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  "Book now to avail the offer",
-                  style: TextStyle(color: Colors.black54),
-                ),
-                const SizedBox(height: 12),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    backgroundColor: AppColors.secondaryColor,
-                    foregroundColor: Colors.black,
-                  ),
-                  child: const Text("Explore Now"),
+          const Text(
+            "Recent Bookings",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Container(
+            height: 150,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.1),
+                  spreadRadius: 2,
+                  blurRadius: 5,
+                  offset: const Offset(0, 3),
                 ),
               ],
             ),
-          ),
-          const SizedBox(width: 12),
-          Image.asset(
-            'assets/images/cleaning.png',
-            height: 80,
-            errorBuilder: (context, error, stackTrace) {
-              return const Icon(Icons.error, size: 50, color: Colors.red);
-            },
+            child: const Center(child: Text("Booking List Placeholder")),
           ),
         ],
       ),

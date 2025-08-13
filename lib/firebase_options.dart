@@ -41,49 +41,49 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCx41x8Bzg1AuFgfTTc9DvoXwrZxtV7cpQ',
-    appId: '1:212009380231:web:fdd69c70fcb3f6c0938b22',
-    messagingSenderId: '212009380231',
-    projectId: 'fixbuddy-5a8ea',
-    authDomain: 'fixbuddy-5a8ea.firebaseapp.com',
-    storageBucket: 'fixbuddy-5a8ea.firebasestorage.app',
-    measurementId: 'G-9PR00JFKR6',
+    apiKey: 'AIzaSyCA_j5TQBcXvOw0YG36ooIuHXHqTqC4Qv4',
+    appId: '1:836908177238:web:a84adb0fc8223aa79ca8f7',
+    messagingSenderId: '836908177238',
+    projectId: 'fixbuddypartner',
+    authDomain: 'fixbuddypartner.firebaseapp.com',
+    storageBucket: 'fixbuddypartner.firebasestorage.app',
+    measurementId: 'G-YZ2SYXF04E',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyClhNlenZ7njhSBnRXlfV_H0807TnVg8lM',
-    appId: '1:212009380231:android:8974c926c78549dc938b22',
-    messagingSenderId: '212009380231',
-    projectId: 'fixbuddy-5a8ea',
-    storageBucket: 'fixbuddy-5a8ea.firebasestorage.app',
+    apiKey: 'AIzaSyDyjDtM8GWpxiHlwTstn6md-VaoDjz9PhM',
+    appId: '1:836908177238:android:e55c669ea5408e849ca8f7',
+    messagingSenderId: '836908177238',
+    projectId: 'fixbuddypartner',
+    storageBucket: 'fixbuddypartner.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAeSe5s3RWPHMbmbZ6vpS_l3orW-WRCLmM',
-    appId: '1:212009380231:ios:efeb9907312e80bf938b22',
-    messagingSenderId: '212009380231',
-    projectId: 'fixbuddy-5a8ea',
-    storageBucket: 'fixbuddy-5a8ea.firebasestorage.app',
-    iosBundleId: 'com.example.fixbuddy',
+    apiKey: 'AIzaSyCHlPETrimRSaBHnJ9MAuyrqngNHv-TJFY',
+    appId: '1:836908177238:ios:a82285260d024a929ca8f7',
+    messagingSenderId: '836908177238',
+    projectId: 'fixbuddypartner',
+    storageBucket: 'fixbuddypartner.firebasestorage.app',
+    iosBundleId: 'com.example.fixbuddyPartner',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAeSe5s3RWPHMbmbZ6vpS_l3orW-WRCLmM',
-    appId: '1:212009380231:ios:efeb9907312e80bf938b22',
-    messagingSenderId: '212009380231',
-    projectId: 'fixbuddy-5a8ea',
-    storageBucket: 'fixbuddy-5a8ea.firebasestorage.app',
-    iosBundleId: 'com.example.fixbuddy',
+    apiKey: 'AIzaSyCHlPETrimRSaBHnJ9MAuyrqngNHv-TJFY',
+    appId: '1:836908177238:ios:a82285260d024a929ca8f7',
+    messagingSenderId: '836908177238',
+    projectId: 'fixbuddypartner',
+    storageBucket: 'fixbuddypartner.firebasestorage.app',
+    iosBundleId: 'com.example.fixbuddyPartner',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyCx41x8Bzg1AuFgfTTc9DvoXwrZxtV7cpQ',
-    appId: '1:212009380231:web:8e569f9ca61396bb938b22',
-    messagingSenderId: '212009380231',
-    projectId: 'fixbuddy-5a8ea',
-    authDomain: 'fixbuddy-5a8ea.firebaseapp.com',
-    storageBucket: 'fixbuddy-5a8ea.firebasestorage.app',
-    measurementId: 'G-8R5KSD9KMN',
+    apiKey: 'AIzaSyCA_j5TQBcXvOw0YG36ooIuHXHqTqC4Qv4',
+    appId: '1:836908177238:web:a384c85063fdb9339ca8f7',
+    messagingSenderId: '836908177238',
+    projectId: 'fixbuddypartner',
+    authDomain: 'fixbuddypartner.firebaseapp.com',
+    storageBucket: 'fixbuddypartner.firebasestorage.app',
+    measurementId: 'G-E0T88LTZGJ',
   );
 
 }

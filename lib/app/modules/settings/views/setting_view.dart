@@ -1,6 +1,8 @@
 // ignore_for_file: avoid_print
 
 import 'package:fixbuddy_partner/app/modules/login/controllers/login_controller.dart';
+import 'package:fixbuddy_partner/app/modules/register/views/widgets/address_details_screen.dart';
+import 'package:fixbuddy_partner/app/modules/register/views/widgets/work_details_screen.dart';
 import 'package:fixbuddy_partner/app/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:fixbuddy_partner/app/constants/app_color.dart';
@@ -52,8 +54,7 @@ class SettingView extends StatelessWidget {
                     leading: Icons.location_on_outlined,
                     title: Text('Location'),
                     onTap: () {
-                      // open location screen
-                      print('Location tapped');
+                      Get.to(WorkDetailsScreen());
                     },
                   ),
                   CustomListTile(

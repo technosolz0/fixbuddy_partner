@@ -28,8 +28,8 @@ class GeneralServices {
   /// To submit account delete request
   Future<bool> submitDeleteRequest({required String reason}) async {
     try {
-      String? userID = await LocalStorage().getUserID();
-      Map<String, dynamic> data = {'userId': userID ?? '', 'reason': reason};
+      String? vendorID = await LocalStorage().getVendorID();
+      Map<String, dynamic> data = {'vendorId': vendorID ?? '', 'reason': reason};
       Response response = await dio.post(
         submitDeleteRequestPath,
         data: data,
@@ -66,9 +66,9 @@ class GeneralServices {
     required int records,
   }) async {
     try {
-      String? userID = await LocalStorage().getUserID();
+      String? vendorID = await LocalStorage().getVendorID();
       Map<String, dynamic> data = {
-        'userId': userID ?? '',
+        'vendorId': vendorID ?? '',
         'query': query,
         'page': page,
         'records': records,
@@ -107,10 +107,10 @@ class GeneralServices {
   /// To update user's current language
   Future<bool> updateCurrentLanguage() async {
     try {
-      String userID = await LocalStorage().getUserID() ?? '';
+      String vendorID = await LocalStorage().getVendorID() ?? '';
       String lang =
           await LocalStorage().getLanguage() ?? AppLanguage.english.locale;
-      Map<String, dynamic> data = {"userId": userID, "lang": lang};
+      Map<String, dynamic> data = {"vendorId": vendorID, "lang": lang};
       Response response = await dio.post(
         updateLangPath,
         data: data,
@@ -145,10 +145,10 @@ class GeneralServices {
   /// Returns bool
   Future<bool> readNotification({required String notificationId}) async {
     try {
-      String userID = await LocalStorage().getUserID() ?? '';
+      String vendorID = await LocalStorage().getVendorID() ?? '';
 
       Map<String, dynamic> data = {
-        'userId': userID,
+        'vendorId': vendorID,
         'notificationId': notificationId,
       };
 
@@ -185,9 +185,9 @@ class GeneralServices {
   /// Returns true if everything is fine.
   Future<bool> checkUserCurrentStatus({required String orgId}) async {
     try {
-      String userID = await LocalStorage().getUserID() ?? '';
+      String vendorID = await LocalStorage().getVendorID() ?? '';
 
-      Map<String, dynamic> data = {'userId': userID, 'orgId': orgId};
+      Map<String, dynamic> data = {'vendorId': vendorID, 'orgId': orgId};
 
       Response response = await dio.post(
         getUserStatusPath,
@@ -241,9 +241,9 @@ class GeneralServices {
   /// To give user's feedback
   Future<bool> submitFeedback({required String feedback}) async {
     try {
-      String userID = await LocalStorage().getUserID() ?? '';
+      String vendorID = await LocalStorage().getVendorID() ?? '';
 
-      Map<String, dynamic> data = {'userId': userID, 'feedback': feedback};
+      Map<String, dynamic> data = {'vendorId': vendorID, 'feedback': feedback};
 
       Response response = await dio.post(
         feedbackPath,

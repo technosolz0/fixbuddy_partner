@@ -1,26 +1,39 @@
 import 'package:dio/dio.dart';
 import 'package:fixbuddy_partner/app/constants/app_color.dart';
+import 'package:fixbuddy_partner/app/data/models/vendor_model.dart';
+import 'package:fixbuddy_partner/app/modules/register/models/register_models.dart';
+import 'package:fixbuddy_partner/app/modules/register/services/register_services.dart';
 import 'package:fixbuddy_partner/app/routes/app_routes.dart';
-import 'package:fixbuddy_partner/app/services/auth_api_service.dart';
 import 'package:fixbuddy_partner/app/utils/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
   final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   final LocalStorage _localStorage = LocalStorage();
-  final isLoading = false.obs;
-
   final AuthApiService _apiService = AuthApiService();
 
+  final isLoading = false.obs;
+  final loginFormKey = GlobalKey<FormState>();
+
+  var isPasswordHidden = true.obs;
+
+  void togglePasswordVisibility() {
+    isPasswordHidden.value = !isPasswordHidden.value;
+  }
+
+  // Email validation regex
   bool isValidEmail(String email) {
     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
     return emailRegex.hasMatch(email);
   }
 
-  Future<void> sendOtp() async {
+  // Optional: validate email and password before sending OTP or login
+  bool validateEmailAndPassword() {
     final email = emailController.text.trim();
+    final password = passwordController.text;
 
     if (email.isEmpty || !isValidEmail(email)) {
       Get.closeAllSnackbars();
@@ -32,45 +45,82 @@ class LoginController extends GetxController {
         backgroundColor: AppColors.errorColor,
         colorText: Colors.white,
       );
-      return;
+      return false;
     }
 
-    isLoading.value = true;
+    if (password.isEmpty) {
+      Get.closeAllSnackbars();
+      Get.snackbar(
+        'Invalid Input',
+        'Please enter your password',
+        backgroundColor: AppColors.errorColor,
+        colorText: Colors.white,
+      );
+      return false;
+    }
 
+    return true;
+  }
+
+  Future<void> login() async {
+    if (!loginFormKey.currentState!.validate()) return;
+
+    isLoading.value = true;
     try {
-      final response = await _apiService.sendLoginOtp(email);
+      final email = emailController.text.trim();
+      final password = passwordController.text.trim();
+
+      final response = await _apiService.login(
+        email: email,
+        password: password,
+      );
 
       if (response.statusCode == 200) {
-        Get.closeAllSnackbars();
-        Get.snackbar(
-          'Success',
-          'OTP sent to your email',
-          backgroundColor: AppColors.successColor,
-          colorText: Colors.white,
-        );
-        Get.toNamed(
-          Routes.verifyOtp,
-          arguments: {'email': email, 'flowType': 'login'},
-        );
+        final data = response.data;
+        final token = data['access_token'] as String?;
+        final vendorMap = data['vendor'] as Map<String, dynamic>?;
+
+        if (token == null || vendorMap == null) {
+          throw Exception('Invalid login response');
+        }
+
+        // Save token securely
+        await _localStorage.setToken(token);
+
+        // Save user ID if available
+        if (vendorMap['id'] != null) {
+          await _localStorage.setVendorID(vendorMap['id'].toString());
+          await _localStorage.setVendorName(  vendorMap['name'] ?? '');
+        }
+
+        // Save user details model (assuming you have VendorModel.fromJson)
+        final vendorDetails = VendorModel.fromJson(vendorMap);
+        await _localStorage.setVendorDetails(vendorDetails);
+
+        // Save last login date
+        await _localStorage.setLastLoginDate(DateTime.now());
+
+        // Optionally set onboarded to true (if relevant)
+        await _localStorage.setIsOnboarded(true);
+
+        Get.snackbar('Success', 'Logged in successfully');
+
+        // Navigate to your home/dashboard screen
+        Get.offNamed(Routes.home); // replace with your route
       } else {
         Get.snackbar(
-          'Error',
-          'Failed to send OTP',
+          'Login Failed',
+          response.data['message'] ?? 'Unable to login, please try again.',
           backgroundColor: AppColors.errorColor,
           colorText: Colors.white,
         );
       }
-    } on DioError catch (e) {
-      Get.snackbar(
-        'Error',
-        e.response?.data['detail'] ?? 'Something went wrong',
-        backgroundColor: AppColors.errorColor,
-        colorText: Colors.white,
-      );
     } catch (e) {
       Get.snackbar(
         'Error',
-        'Unexpected error: $e',
+        e is DioException
+            ? e.response?.data['detail'] ?? e.message
+            : e.toString(),
         backgroundColor: AppColors.errorColor,
         colorText: Colors.white,
       );
@@ -82,9 +132,11 @@ class LoginController extends GetxController {
   @override
   void onClose() {
     emailController.dispose();
+    passwordController.dispose();
     super.onClose();
   }
 
+  // Logout user and clear local storage
   Future<void> logout() async {
     await _localStorage.clearLocalStorage();
 

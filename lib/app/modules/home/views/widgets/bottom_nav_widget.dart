@@ -14,11 +14,11 @@ class BottomNavWidget extends StatelessWidget {
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
         BottomNavigationBarItem(
           icon: Icon(Icons.calendar_today_outlined),
-          label: 'Booking',
+          label: 'My Booking',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.account_balance_wallet_outlined),
-          label: 'Wallet',
+          label: 'Transaction',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.person_outline),

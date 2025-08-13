@@ -1,119 +1,114 @@
+import 'package:dio/dio.dart';
+import 'package:fixbuddy_partner/app/constants/app_color.dart';
+import 'package:fixbuddy_partner/app/data/models/vendor_model.dart';
+import 'package:fixbuddy_partner/app/modules/register/models/register_models.dart';
+import 'package:fixbuddy_partner/app/modules/register/services/register_services.dart';
+import 'package:fixbuddy_partner/app/utils/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  var username = 'aamir'.obs;
-  var location = 'Jivdani road Virar East-Virar-Maharashtra'.obs;
+  var username = ''.obs;
+  var location = ''.obs;
   final RxInt selectedIndex = 0.obs;
+  var workStatus = 'work_on'.obs;
+
+  final isLoading = false.obs;
+
+  final LocalStorage localStorage = LocalStorage();
+  final AuthApiService _apiService = AuthApiService();
 
   @override
   void onInit() {
     super.onInit();
+    _loadVendorDetails();
   }
 
   void changeTab(int index) {
     selectedIndex.value = index;
   }
 
-  // Map of sub-categories by main category title
-  final Map<String, List<Map<String, String>>> subCategories = {
-    'Cleaning & Pest Control': [
-      {'title': 'Bathroom Cleaning', 'icon': 'assets/icons/bathroom.png'},
-      {'title': 'Kitchen Cleaning', 'icon': 'assets/icons/kitchen.png'},
-      {'title': 'Full Home Cleaning', 'icon': 'assets/icons/home.png'},
-      {'title': 'Sofa & Carpet Cleaning', 'icon': 'assets/icons/sofa.png'},
-      {'title': 'Cockroach Control', 'icon': 'assets/icons/pest1.png'},
-      {'title': 'Termite Control', 'icon': 'assets/icons/pest2.png'},
-      {'title': 'Bed Bug Control', 'icon': 'assets/icons/pest3.png'},
-    ],
-  };
+  Future<void> _loadVendorDetails() async {
+    final VendorModel? vendor = await localStorage.getVendorDetails();
+    if (vendor != null) {
+      // Full name fallback
+      username.value = vendor.name.isNotEmpty == true ? vendor.name : 'Vendor';
 
-  // Function to open sub-category bottom sheet
-  void openSubCategories(String categoryTitle) {
-    final selectedSubCategories = subCategories[categoryTitle];
+      // Location from personalDetails map if city exists
+      location.value =
+          (vendor.address.isNotEmpty &&
+              vendor.city.isNotEmpty &&
+              vendor.state.isNotEmpty &&
+              vendor.pincode.toString().isNotEmpty)
+          ? '${vendor.address}, ${vendor.city}, ${vendor.state}, ${vendor.pincode}'
+          : vendor.address.isNotEmpty
+          ? vendor.address
+          : vendor.state.isNotEmpty
+          ? vendor.state
+          : vendor.city.isNotEmpty
+          ? vendor.city.toString()
+          : 'Unknown Location';
 
-    if (selectedSubCategories == null) {
+      workStatus.value = vendor.workStatus.toString();
+    }
+  }
+
+  Future<void> updateWorkStatus(String newWorkStatus) async {
+    if (!['work_on', 'work_off'].contains(newWorkStatus)) {
       Get.snackbar(
-        'Coming Soon',
-        'Sub categories for $categoryTitle not added yet.',
+        'Error',
+        'Invalid work status',
+        backgroundColor: AppColors.errorColor,
+        colorText: Colors.white,
       );
       return;
     }
 
-    Get.bottomSheet(
-      Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-        ),
-        padding: const EdgeInsets.fromLTRB(16, 24, 16, 16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    categoryTitle,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                IconButton(
-                  onPressed: () => Get.back(),
-                  icon: const Icon(Icons.close),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: selectedSubCategories.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 2.0,
-                crossAxisSpacing: 12,
-                mainAxisSpacing: 12,
-              ),
-              itemBuilder: (context, index) {
-                final sub = selectedSubCategories[index];
-                return Container(
-                  padding: const EdgeInsets.all(2),
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 238, 238, 238),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Column(
-                    children: [
-                      Image.asset(
-                        sub['icon']!,
-                        height: 36,
-                        errorBuilder: (context, error, stackTrace) =>
-                            const Icon(
-                              Icons.error,
-                              color: Colors.red,
-                              size: 50,
-                            ),
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        sub['title']!,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 11),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-      isScrollControlled: true,
-    );
+    isLoading.value = true;
+    try {
+      final VendorModel? vendor = await localStorage.getVendorDetails();
+      if (vendor == null) {
+        Get.snackbar(
+          'Error',
+          'Vendor details not found or invalid',
+          backgroundColor: AppColors.errorColor,
+          colorText: Colors.white,
+        );
+        return;
+      }
+
+      final response = await _apiService.updateWorkStatus(
+        vendorId: vendor.id,
+        workStatus: newWorkStatus,
+      );
+
+      if (response.statusCode == 200) {
+        workStatus.value = newWorkStatus;
+
+        Get.snackbar(
+          'Success',
+          'Work status updated to $newWorkStatus',
+          backgroundColor: AppColors.successColor,
+          colorText: Colors.white,
+        );
+      } else {
+        Get.snackbar(
+          'Error',
+          response.data['detail']?.toString() ?? 'Failed to update work status',
+          backgroundColor: AppColors.errorColor,
+          colorText: Colors.white,
+        );
+      }
+    } on DioException catch (e) {
+      Get.snackbar(
+        'Error',
+        e.response?.data['detail']?.toString() ??
+            'Failed to update work status',
+        backgroundColor: AppColors.errorColor,
+        colorText: Colors.white,
+      );
+    } finally {
+      isLoading.value = false;
+    }
   }
 }
