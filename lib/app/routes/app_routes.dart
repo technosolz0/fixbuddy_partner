@@ -15,10 +15,16 @@ abstract class Routes {
   static const profile = _Paths.profile;
   static const notification = _Paths.notification;
   static const setting = _Paths.setting;
-
   static const addressDetails = _Paths.addressDetails;
   static const bankDetails = _Paths.bankDetails;
   static const workDetails = _Paths.workDetails;
+  static const editProfile = _Paths.editProfile;
+  static const changePassword = _Paths.changePassword;
+  static const helpCenter = _Paths.helpCenter;
+  static const aboutUs = _Paths.aboutUs;
+  static const termsAndConditions = _Paths.termsAndConditions;
+  static const privacyPolicy = _Paths.privacyPolicy;
+  static const contactUs = _Paths.contactUs;
 }
 
 abstract class _Paths {
@@ -36,8 +42,14 @@ abstract class _Paths {
   static const profile = '/profile';
   static const notification = '/notification';
   static const setting = '/setting';
-
   static const addressDetails = '/addressDetails';
   static const bankDetails = '/bankDetails';
   static const workDetails = '/workDetails';
+  static const editProfile = '/editProfile';
+  static const changePassword = '/changePassword';
+  static const helpCenter = '/helpCenter';
+  static const aboutUs = '/aboutUs';
+  static const termsAndConditions = '/termsAndConditions';
+  static const privacyPolicy = '/privacyPolicy';
+  static const contactUs = '/contactUs';
 }

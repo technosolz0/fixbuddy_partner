@@ -1,10 +1,10 @@
+import 'package:fixbuddy_partner/app/modules/account/views/account_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fixbuddy_partner/app/modules/booking/views/booking_view.dart';
 import 'package:fixbuddy_partner/app/modules/home/controllers/home_controller.dart';
 import 'package:fixbuddy_partner/app/modules/home/views/home_view.dart';
 import 'package:fixbuddy_partner/app/modules/profile/views/profile_view.dart';
-import 'package:fixbuddy_partner/app/modules/wallet/views/wallet_view.dart';
 import 'package:fixbuddy_partner/app/widgets/bottom_nav_bar.dart';
 
 class MainScreen extends StatelessWidget {
@@ -16,7 +16,7 @@ class MainScreen extends StatelessWidget {
   final List<Widget> screens = [
     HomeView(),
     const BookingView(),
-    const WalletView(),
+    AccountView(),
     const ProfileView(),
   ];
 

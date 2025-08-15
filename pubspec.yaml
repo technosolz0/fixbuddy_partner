@@ -59,6 +59,7 @@ dependencies:
   file_picker: ^10.2.0
   geolocator: ^14.0.2
   json_annotation: ^4.9.0
+  cached_network_image: ^3.4.1
 
 
 dev_dependencies:
