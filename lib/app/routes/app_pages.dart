@@ -2,6 +2,8 @@ import 'package:fixbuddy_partner/app/modules/account/bindings/account_binding.da
 import 'package:fixbuddy_partner/app/modules/account/views/account_view.dart';
 import 'package:fixbuddy_partner/app/modules/login/bindings/login_binding.dart';
 import 'package:fixbuddy_partner/app/modules/login/views/login_view.dart';
+import 'package:fixbuddy_partner/app/modules/profile/bindings/edit_profile_binding.dart';
+import 'package:fixbuddy_partner/app/modules/profile/views/edit_profile_view.dart';
 import 'package:fixbuddy_partner/app/modules/register/bindings/registration_binding.dart';
 import 'package:fixbuddy_partner/app/modules/register/views/registration_view.dart';
 import 'package:fixbuddy_partner/app/modules/register/views/widgets/bank_details_screen.dart';
@@ -105,35 +107,35 @@ class AppPages {
       page: () => EditProfileView(),
       binding: EditProfileBinding(),
     ),
-    GetPage(
-      name: Routes.changePassword,
-      page: () => ChangePasswordView(),
-      binding: ChangePasswordBinding(),
-    ),
-    GetPage(
-      name: Routes.helpCenter,
-      page: () => HelpCenterView(),
-      binding: HelpCenterBinding(),
-    ),
-    GetPage(
-      name: Routes.aboutUs,
-      page: () => AboutUsView(),
-      binding: AboutUsBinding(),
-    ),
-    GetPage(
-      name: Routes.termsAndConditions,
-      page: () => TermsAndConditionsView(),
-      binding: TermsAndConditionsBinding(),
-    ),
-    GetPage(
-      name: Routes.privacyPolicy,
-      page: () => PrivacyPolicyView(),
-      binding: PrivacyPolicyBinding(),
-    ),
-    GetPage(
-      name: Routes.contactUs,
-      page: () => ContactUsView(),
-      binding: ContactUsBinding(),
-    ),
+    // GetPage(
+    //   name: Routes.changePassword,
+    //   page: () => ChangePasswordView(),
+    //   binding: ChangePasswordBinding(),
+    // ),
+    // GetPage(
+    //   name: Routes.helpCenter,
+    //   page: () => HelpCenterView(),
+    //   binding: HelpCenterBinding(),
+    // ),
+    // GetPage(
+    //   name: Routes.aboutUs,
+    //   page: () => AboutUsView(),
+    //   binding: AboutUsBinding(),
+    // ),
+    // GetPage(
+    //   name: Routes.termsAndConditions,
+    //   page: () => TermsAndConditionsView(),
+    //   binding: TermsAndConditionsBinding(),
+    // ),
+    // GetPage(
+    //   name: Routes.privacyPolicy,
+    //   page: () => PrivacyPolicyView(),
+    //   binding: PrivacyPolicyBinding(),
+    // ),
+    // GetPage(
+    //   name: Routes.contactUs,
+    //   page: () => ContactUsView(),
+    //   binding: ContactUsBinding(),
+    // ),
   ];
 }

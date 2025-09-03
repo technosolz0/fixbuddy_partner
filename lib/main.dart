@@ -118,10 +118,8 @@ void main() async {
     await localStorage.setFirebaseToken(token);
   }
 
-  // 🔹 Store actual location
   await fetchAndStoreDeviceLocation();
 
-  // 🔹 Store device name
   final deviceInfoPlugin = DeviceInfoPlugin();
   String deviceName = 'Unknown Device';
   if (Platform.isAndroid) {
