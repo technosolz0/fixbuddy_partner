@@ -1,9 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:fixbuddy_partner/app/constants/app_color.dart';
 import 'package:fixbuddy_partner/app/data/models/vendor_model.dart';
-import 'package:fixbuddy_partner/app/modules/register/models/register_models.dart';
 import 'package:fixbuddy_partner/app/modules/register/services/register_services.dart';
 import 'package:fixbuddy_partner/app/utils/local_storage.dart';
+import 'package:fixbuddy_partner/app/utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

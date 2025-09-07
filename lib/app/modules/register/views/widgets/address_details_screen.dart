@@ -1,10 +1,12 @@
-import 'package:fixbuddy_partner/app/constants/app_color.dart';
 import 'package:fixbuddy_partner/app/modules/register/controllers/registration_controller.dart';
+import 'package:fixbuddy_partner/app/utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AddressDetailsScreen extends StatelessWidget {
   final RegistrationController controller = Get.put(RegistrationController());
+
+  AddressDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

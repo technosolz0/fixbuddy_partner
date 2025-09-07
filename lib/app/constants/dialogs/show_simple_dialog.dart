@@ -21,8 +21,8 @@ showSimpleDialog(
         canPop: canPop,
         child: Dialog(
           backgroundColor: context.isLightTheme
-              ? ThemeClass.cardLightColor
-              : ThemeClass.cardColor,
+              ? AppColors.cardLightColor
+              : AppColors.cardColor,
           child: Padding(
             padding: const EdgeInsets.all(20),
             child: Column(
@@ -36,7 +36,7 @@ showSimpleDialog(
                       style ??
                       GothamRounded.bold(
                         fontSize: 20.sp,
-                        color: ThemeClass.darkModeTextColor,
+                        color: AppColors.darkModeTextColor,
                       ),
                 ),
                 if (desc != null)
@@ -47,7 +47,7 @@ showSimpleDialog(
                         desc,
                         style: GothamRounded.medium(
                           fontSize: 14.sp,
-                          color: ThemeClass.darkModeTextColor,
+                          color: AppColors.darkModeTextColor,
                         ),
                         textAlign: TextAlign.center,
                       ),

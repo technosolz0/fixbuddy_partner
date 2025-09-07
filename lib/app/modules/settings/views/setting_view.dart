@@ -1,9 +1,9 @@
 // ignore_for_file: avoid_print
 
+import 'package:fixbuddy_partner/app/utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:fixbuddy_partner/app/constants/app_color.dart';
 import 'package:fixbuddy_partner/app/widgets/customListTile.dart';
 import 'package:fixbuddy_partner/app/widgets/custom_app_bar.dart';
 import 'package:fixbuddy_partner/app/modules/settings/controllers/setting_controller.dart';

@@ -17,8 +17,8 @@ Future showLogoutConfirmationDialog({required VoidCallback onTapYes}) async {
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 22.h),
           decoration: BoxDecoration(
             color: context.isLightTheme
-                ? ThemeClass.cardLightColor
-                : ThemeClass.cardColor,
+                ? AppColors.cardLightColor
+                : AppColors.cardColor,
             borderRadius: BorderRadius.circular(16.r),
           ),
           child: Column(
@@ -29,7 +29,7 @@ Future showLogoutConfirmationDialog({required VoidCallback onTapYes}) async {
                 context.l10n.logout_confirmation,
                 style: GothamRounded.semiBold(
                   fontSize: 24.sp,
-                  color: ThemeClass.darkModeTextColor,
+                  color: AppColors.darkModeTextColor,
                 ),
                 textAlign: TextAlign.center,
               ),

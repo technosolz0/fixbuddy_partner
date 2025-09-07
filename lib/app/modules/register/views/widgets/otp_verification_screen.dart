@@ -1,5 +1,5 @@
-// lib/app/views/screens/register/otp_verification_screen.dart
-import 'package:fixbuddy_partner/app/constants/app_color.dart';
+
+import 'package:fixbuddy_partner/app/utils/theme.dart';
 import 'package:fixbuddy_partner/app/modules/register/controllers/registration_controller.dart';
 import 'package:fixbuddy_partner/app/utils/extensions.dart';
 import 'package:fixbuddy_partner/app/widgets/custom_app_bar.dart';

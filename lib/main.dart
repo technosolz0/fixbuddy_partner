@@ -61,6 +61,7 @@ Future<void> fetchAndStoreDeviceLocation() async {
 
   try {
     Position position = await Geolocator.getCurrentPosition(
+      // ignore: deprecated_member_use
       desiredAccuracy: LocationAccuracy.high,
     );
     await localStorage.setDeviceLatitude(position.latitude.toString());
@@ -124,10 +125,10 @@ void main() async {
   String deviceName = 'Unknown Device';
   if (Platform.isAndroid) {
     AndroidDeviceInfo androidInfo = await deviceInfoPlugin.androidInfo;
-    deviceName = androidInfo.model ?? 'Android Device';
+    deviceName = androidInfo.model;
   } else if (Platform.isIOS) {
     IosDeviceInfo iosInfo = await deviceInfoPlugin.iosInfo;
-    deviceName = iosInfo.utsname.machine ?? 'iOS Device';
+    deviceName = iosInfo.utsname.machine;
   }
   await localStorage.setDeviceName(deviceName);
 

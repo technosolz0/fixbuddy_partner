@@ -34,8 +34,8 @@ class CustomSnackbar {
               color: type == SnackType.error
                   ? Colors.red
                   : type == SnackType.success
-                  ? ThemeClass.successGreen
-                  : ThemeClass.infoYello,
+                  ? AppColors.successGreen
+                  : AppColors.infoYellow,
               borderRadius: BorderRadius.circular(5),
               child: ConstrainedBox(
                 constraints: BoxConstraints(

@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:fixbuddy_partner/app/constants/app_color.dart';
 import 'package:fixbuddy_partner/app/modules/profile/controllers/profile_controller.dart';
+import 'package:fixbuddy_partner/app/modules/profile/views/work.dart';
 import 'package:fixbuddy_partner/app/routes/app_routes.dart';
+import 'package:fixbuddy_partner/app/utils/servex_utils.dart';
+import 'package:fixbuddy_partner/app/utils/theme.dart';
 import 'package:fixbuddy_partner/app/widgets/customListTile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -41,7 +43,8 @@ class _ProfileViewState extends State<ProfileView> {
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
+                    // ignore: deprecated_member_use
+                    color: AppColors.blackColor.withOpacity(0.3),
                     blurRadius: 10.r,
                     offset: const Offset(0, 4),
                   ),
@@ -70,15 +73,7 @@ class _ProfileViewState extends State<ProfileView> {
                       child: Container(
                         height: size.height * 0.3,
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              AppColors.primaryColor.withOpacity(0.9),
-                              AppColors.secondaryColor.withOpacity(0.85),
-                              AppColors.whiteColor.withOpacity(0.3),
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
+                          gradient: AppColors.primaryGradient,
                         ),
                       ),
                     ),
@@ -101,6 +96,7 @@ class _ProfileViewState extends State<ProfileView> {
                                   ),
                                   boxShadow: [
                                     BoxShadow(
+                                      // ignore: deprecated_member_use
                                       color: Colors.black.withOpacity(0.3),
                                       blurRadius: 12.r,
                                       offset: const Offset(0, 6),
@@ -203,6 +199,7 @@ class _ProfileViewState extends State<ProfileView> {
                               color: AppColors.blackColor,
                               shadows: [
                                 Shadow(
+                                  // ignore: deprecated_member_use
                                   color: Colors.white.withOpacity(0.8),
                                   blurRadius: 4,
                                 ),
@@ -419,7 +416,10 @@ class _ProfileViewState extends State<ProfileView> {
           color: AppColors.primaryColor,
         ),
         onTap: () {
-          print('$title tapped: $value');
+          if (title == 'Category ID') {
+            Get.to(() => WorkDetailsScreen());
+          }
+          ServexUtils.dPrint('$title tapped: $value');
         },
         backgroundColor: Colors.transparent,
         borderRadius: 12.r,

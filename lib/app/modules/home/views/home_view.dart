@@ -1,13 +1,13 @@
 // --- Corrected HomeView code ---
-import 'package:fixbuddy_partner/app/constants/app_color.dart';
 import 'package:fixbuddy_partner/app/modules/home/controllers/home_controller.dart';
 import 'package:fixbuddy_partner/app/modules/home/views/widgets/bottom_nav_widget.dart';
 import 'package:fixbuddy_partner/app/routes/app_routes.dart';
+import 'package:fixbuddy_partner/app/utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeView extends GetView<HomeController> {
-  HomeView({super.key});
+  const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +33,8 @@ class HomeView extends GetView<HomeController> {
       children: [
         Container(
           height: size.height * 0.25,
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [AppColors.primaryColor, AppColors.secondaryColor],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
+          decoration: BoxDecoration(
+            gradient: AppColors.primaryGradient,
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(30),
               bottomRight: Radius.circular(30),
@@ -248,7 +244,7 @@ class HomeView extends GetView<HomeController> {
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.1),
+                  color: AppColors.grayColor,
                   spreadRadius: 2,
                   blurRadius: 5,
                   offset: const Offset(0, 3),

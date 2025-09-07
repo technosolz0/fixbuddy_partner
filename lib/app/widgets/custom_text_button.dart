@@ -1,4 +1,5 @@
-import 'package:fixbuddy_partner/app/constants/app_color.dart';
+
+import 'package:fixbuddy_partner/app/utils/theme.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextButton extends StatelessWidget {

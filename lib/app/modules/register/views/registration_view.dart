@@ -1,6 +1,5 @@
 import 'dart:io';
-
-import 'package:fixbuddy_partner/app/constants/app_color.dart';
+import 'package:fixbuddy_partner/app/utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -40,17 +39,7 @@ class RegistrationView extends StatelessWidget {
           // Top gradient
           Container(
             height: size.height * 0.35,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  AppColors.secondaryColor,
-                  AppColors.tritoryColor,
-                  AppColors.whiteColor,
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              ),
-            ),
+            decoration: BoxDecoration(gradient: AppColors.primaryGradient),
           ),
 
           SafeArea(

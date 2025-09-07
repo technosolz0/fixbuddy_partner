@@ -15,7 +15,6 @@ import 'package:fixbuddy_partner/app/data/services/auth_services.dart';
 import 'package:fixbuddy_partner/app/routes/app_routes.dart';
 import 'package:fixbuddy_partner/app/utils/firebase_notifications.dart';
 import 'package:fixbuddy_partner/app/utils/local_storage.dart';
-import 'package:fixbuddy_partner/main.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 

@@ -1,201 +1,13 @@
-// import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
-// import 'package:image_picker/image_picker.dart';
-// import 'package:fixbuddy_partner/app/constants/app_color.dart';
-// import 'package:fixbuddy_partner/app/modules/register/controllers/registration_controller.dart';
-
-// class DocumentUploadScreen extends StatelessWidget {
-//   const DocumentUploadScreen({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final controller = Get.find<RegistrationController>();
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Upload Documents'),
-//         backgroundColor: AppColors.primaryColor,
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Form(
-//           key: controller.documentFormKey,
-//           child: ListView(
-//             children: [
-//               const Text(
-//                 'Upload Required Documents',
-//                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-//               ),
-//               const SizedBox(height: 20),
-//               // Profile Picture
-//               Obx(
-//                 () => Column(
-//                   children: [
-//                     controller.profilePicBytes.value == null
-//                         ? const Text('No profile picture selected')
-//                         : Image.memory(
-//                             controller.profilePicBytes.value!,
-//                             height: 100,
-//                             width: 100,
-//                             fit: BoxFit.cover,
-//                           ),
-//                     const SizedBox(height: 10),
-//                     ElevatedButton(
-//                       onPressed: () async {
-//                         final picker = ImagePicker();
-//                         final pickedFile = await picker.pickImage(
-//                           source: ImageSource.gallery,
-//                         );
-//                         if (pickedFile != null) {
-//                           controller.profilePicBytes.value = await pickedFile
-//                               .readAsBytes();
-//                         }
-//                       },
-//                       style: ElevatedButton.styleFrom(
-//                         backgroundColor: AppColors.primaryColor,
-//                         padding: const EdgeInsets.symmetric(
-//                           vertical: 12,
-//                           horizontal: 20,
-//                         ),
-//                       ),
-//                       child: const Text('Select Profile Picture'),
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//               const SizedBox(height: 20),
-//               // Identity Document
-//               Obx(
-//                 () => Column(
-//                   children: [
-//                     controller.identityDocBytes.value == null
-//                         ? const Text('No identity document selected')
-//                         : const Text('Identity document selected'),
-//                     const SizedBox(height: 10),
-//                     ElevatedButton(
-//                       onPressed: () async {
-//                         final picker = ImagePicker();
-//                         final pickedFile = await picker.pickImage(
-//                           source: ImageSource.gallery,
-//                         );
-//                         if (pickedFile != null) {
-//                           controller.identityDocBytes.value = await pickedFile
-//                               .readAsBytes();
-//                         }
-//                       },
-//                       style: ElevatedButton.styleFrom(
-//                         backgroundColor: AppColors.primaryColor,
-//                         padding: const EdgeInsets.symmetric(
-//                           vertical: 12,
-//                           horizontal: 20,
-//                         ),
-//                       ),
-//                       child: const Text('Select Identity Document'),
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//               const SizedBox(height: 20),
-//               // Bank Document
-//               Obx(
-//                 () => Column(
-//                   children: [
-//                     controller.bankDocBytes.value == null
-//                         ? const Text('No bank document selected')
-//                         : const Text('Bank document selected'),
-//                     const SizedBox(height: 10),
-//                     ElevatedButton(
-//                       onPressed: () async {
-//                         final picker = ImagePicker();
-//                         final pickedFile = await picker.pickImage(
-//                           source: ImageSource.gallery,
-//                         );
-//                         if (pickedFile != null) {
-//                           controller.bankDocBytes.value = await pickedFile
-//                               .readAsBytes();
-//                         }
-//                       },
-//                       style: ElevatedButton.styleFrom(
-//                         backgroundColor: AppColors.primaryColor,
-//                         padding: const EdgeInsets.symmetric(
-//                           vertical: 12,
-//                           horizontal: 20,
-//                         ),
-//                       ),
-//                       child: const Text('Select Bank Document'),
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//               const SizedBox(height: 20),
-//               // Address Document
-//               Obx(
-//                 () => Column(
-//                   children: [
-//                     controller.addressDocBytes.value == null
-//                         ? const Text('No address document selected')
-//                         : const Text('Address document selected'),
-//                     const SizedBox(height: 10),
-//                     ElevatedButton(
-//                       onPressed: () async {
-//                         final picker = ImagePicker();
-//                         final pickedFile = await picker.pickImage(
-//                           source: ImageSource.gallery,
-//                         );
-//                         if (pickedFile != null) {
-//                           controller.addressDocBytes.value = await pickedFile
-//                               .readAsBytes();
-//                         }
-//                       },
-//                       style: ElevatedButton.styleFrom(
-//                         backgroundColor: AppColors.primaryColor,
-//                         padding: const EdgeInsets.symmetric(
-//                           vertical: 12,
-//                           horizontal: 20,
-//                         ),
-//                       ),
-//                       child: const Text('Select Address Document'),
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//               const SizedBox(height: 20),
-//               // Submit Button
-//               Obx(
-//                 () => ElevatedButton(
-//                   onPressed: controller.isLoading.value
-//                       ? null
-//                       : controller.submitDocuments,
-//                   style: ElevatedButton.styleFrom(
-//                     backgroundColor: AppColors.primaryColor,
-//                     padding: const EdgeInsets.symmetric(vertical: 15),
-//                     minimumSize: const Size(double.infinity, 50),
-//                   ),
-//                   child: controller.isLoading.value
-//                       ? const CircularProgressIndicator(color: Colors.white)
-//                       : const Text(
-//                           'Submit Documents',
-//                           style: TextStyle(fontSize: 16),
-//                         ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:fixbuddy_partner/app/constants/app_color.dart';
+import 'package:fixbuddy_partner/app/utils/theme.dart';
 import 'package:fixbuddy_partner/app/modules/register/controllers/registration_controller.dart';
 
 class DocumentUploadScreen extends StatelessWidget {
-  const DocumentUploadScreen({Key? key}) : super(key: key);
+  const DocumentUploadScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -324,6 +136,7 @@ class DocumentUploadScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
+              // ignore: deprecated_member_use
               color: Colors.grey.withOpacity(0.1),
               spreadRadius: 2,
               blurRadius: 5,

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:dio/dio.dart';
 import 'package:fixbuddy_partner/app/constants/api_constants.dart';
 import 'package:fixbuddy_partner/app/data/models/vendor_model.dart';
@@ -14,13 +16,13 @@ class VendorApiService {
   Future<VendorModel> fetchVendorData(String vendorId, String token) async {
     try {
       final response = await _dio.get(
-        '/vendors/$vendorId',
+        '/api/vendors/$vendorId',
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
       return VendorModel.fromJson(response.data);
     } catch (e) {
       throw DioException(
-        requestOptions: RequestOptions(path: '/vendors/$vendorId'),
+        requestOptions: RequestOptions(path: '/api/vendors/$vendorId'),
         error: e,
       );
     }
@@ -33,14 +35,14 @@ class VendorApiService {
   ) async {
     try {
       final response = await _dio.put(
-        '/vendors/$vendorId',
+        '/api/vendors/$vendorId',
         data: vendor.toJson(),
         options: Options(headers: {'Authorization': 'Bearer $token'}),
       );
       return VendorModel.fromJson(response.data);
     } catch (e) {
       throw DioException(
-        requestOptions: RequestOptions(path: '/vendors/$vendorId'),
+        requestOptions: RequestOptions(path: '/api/vendors/$vendorId'),
         error: e,
       );
     }
