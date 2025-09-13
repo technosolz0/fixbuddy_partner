@@ -1213,7 +1213,7 @@ class RegistrationController extends GetxController {
           Get.offAllNamed('/documentUpload');
         }
         break;
-      case 6:
+      case 5:
         if (currentRoute != Routes.home) Get.offAllNamed(Routes.home);
         break;
       default:
